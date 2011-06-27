@@ -1,0 +1,19 @@
+mvector C++ template class
+--------------------------
+
+Copyright (C) 2011 Carlo Baldassi <carlobaldassi@gmail.com>
+
+The C++ header file mvector.hpp provides a template class which
+allows to build easily "multi-vector" classes.
+For example, instead of:
+
+  vector<vector<vector<vector<double> > > >
+
+one can use:
+
+  mvector<4, double>
+
+The class just inherits the right number of nested vectors,
+so that all vector methods are available.
+
+Documentation is provided via two simple example files.
