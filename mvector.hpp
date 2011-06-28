@@ -129,12 +129,35 @@ namespace xstd {
 		mvector<d, T>(mshape<d> v, T const & t = T()) :
 			std::vector<mvector<d - 1, T> >(v.current(), mvector<d - 1, T>(v.next(), t))
 		{}
+		mvector<d, T>(std::initializer_list<size_t> ilst, T const & t = T()) :
+			//mvector<d, T>(ilst.begin())
+			//std::vector<mvector<d - 1, T> >(*(ilst.begin()), mvector<d - 1, T>(ilst.begin()++, T()))
+			std::vector<mvector<d - 1, T> >(*(ilst.begin()))
+		{
+			auto ilst_next = ilst.begin();
+			++ilst_next;
+			for (auto i = this->begin(); i != this->end(); ++i) {
+				(*i) = mvector<d - 1, T>(ilst_next, t);
+			}
+		}
 
+		private:
+		mvector<d, T>(std::initializer_list<size_t>::const_iterator & ilst_it, T const & t = T()) :
+			std::vector<mvector<d - 1, T> >(*ilst_it)
+		{
+			auto ilst_next = ilst_it;
+			++ilst_next;
+			for (auto i = this->begin(); i != this->end(); ++i) {
+				(*i) = mvector<d - 1, T>(*ilst_next, t);
+			}
+		}
+
+		public:
 		void reshape(size_t n, T const & t = T())
 		{
 			XSTD_DBGOUT("reshape d=" << d << " n=" << n);
 			this->resize(n, mvector<d - 1, T>(n, t));
-			for (typename mvector<d, T>::iterator i = this->begin(); i != this->end(); ++i) {
+			for (auto i = this->begin(); i != this->end(); ++i) {
 				i->reshape(n, t);
 			}
 		}
@@ -143,7 +166,7 @@ namespace xstd {
 		{
 			XSTD_DBGOUT("reshape d=" << d << " v=" << v[0]);
 			this->resize(v[0], mvector<d - 1, T>(v + 1, t));
-			for (typename mvector<d, T>::iterator i = this->begin(); i != this->end(); ++i) {
+			for (auto i = this->begin(); i != this->end(); ++i) {
 				i->reshape(v + 1, t);
 			}
 		}
@@ -152,10 +175,12 @@ namespace xstd {
 		{
 			XSTD_DBGOUT("reshape d=" << d << " v=" << v.current());
 			this->resize(v.current(), mvector<d - 1, T>(v.next(), t));
-			for (typename mvector<d, T>::iterator i = this->begin(); i != this->end(); ++i) {
+			for (auto i = this->begin(); i != this->end(); ++i) {
 				i->reshape(v.next(), t);
 			}
 		}
+
+		friend class mvector<d + 1, T>;
 	};
 
 	template<typename T>
@@ -165,6 +190,10 @@ namespace xstd {
 		mvector<1, T>(size_t n = 0, T const & t = T()) : std::vector<T>(n, t) {}
 		mvector<1, T>(size_t v[], T const & t = T()) : std::vector<T>(v[0], t) {}
 		mvector<1, T>(mshape<1> const & v, T const & t = T()) : std::vector<T>(v.current(), t) {}
+		mvector<1, T>(std::initializer_list<size_t> ilst, T const & t = T()) : /*mvector<d, T>(ilst.begin())*/ std::vector<T>(*(ilst.begin()), t) {}
+		private:
+		mvector<1, T>(std::initializer_list<size_t>::const_iterator & ilst_it, T const & t = T()) : std::vector<T>(ilst_it, t) {}
+		public:
 		void reshape(size_t n, T const & t = T())
 		{
 			this->resize(n, t);
@@ -179,6 +208,8 @@ namespace xstd {
 		{
 			this->resize(v.current(), t);
 		}
+
+		friend class mvector<2, T>;
 	};
 
 	// This is defined mainly to avoid infinte recursion;
