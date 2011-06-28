@@ -8,7 +8,7 @@
 
 using namespace std;
 
-//// the mvector and mshape classes live in the xstd namespace
+//// the mvector class lives in the xstd namespace
 using namespace xstd;
 
 int main(int argc, char ** argv)
@@ -33,7 +33,7 @@ int main(int argc, char ** argv)
 	cout << c << endl << endl;
 
 	//// reshape the above "tensor" from 2x3x4 to 3x4x2 and fill with 2's
-	c.reshape(mshape<3>(3, 4, 2), 2.);
+	c.reshape({3, 4, 2}, 2.);
 
 	//// alternative (non-inline) way to obtain the same reshaping as above:
 	// size_t w[3] = {3, 4, 2};

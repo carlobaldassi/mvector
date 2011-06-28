@@ -180,6 +180,31 @@ namespace xstd {
 			}
 		}
 
+		void reshape(std::initializer_list<size_t> v, T const & t = T())
+		{
+			XSTD_DBGOUT("reshape d=" << d << " v=" << *(v.begin()));
+			auto v_next = v.begin();
+			++v_next;
+			this->resize(*(v.begin()), mvector<d - 1, T>(v_next, t));
+			for (auto i = this->begin(); i != this->end(); ++i) {
+				i->reshape(v_next, t);
+			}
+		}
+
+		private:
+		void reshape(std::initializer_list<size_t>::const_iterator & vit, T const & t = T())
+		{
+			XSTD_DBGOUT("reshape d=" << d << " v=" << *(vit));
+			auto v_next = vit;
+			++v_next;
+			this->resize(*vit, mvector<d - 1, T>(v_next, t));
+			for (auto i = this->begin(); i != this->end(); ++i) {
+				i->reshape(v_next, t);
+			}
+		}
+
+		public:
+
 		friend class mvector<d + 1, T>;
 	};
 
@@ -192,7 +217,7 @@ namespace xstd {
 		mvector<1, T>(mshape<1> const & v, T const & t = T()) : std::vector<T>(v.current(), t) {}
 		mvector<1, T>(std::initializer_list<size_t> ilst, T const & t = T()) : /*mvector<d, T>(ilst.begin())*/ std::vector<T>(*(ilst.begin()), t) {}
 		private:
-		mvector<1, T>(std::initializer_list<size_t>::const_iterator & ilst_it, T const & t = T()) : std::vector<T>(ilst_it, t) {}
+		mvector<1, T>(std::initializer_list<size_t>::const_iterator & ilst_it, T const & t = T()) : std::vector<T>(*ilst_it, t) {}
 		public:
 		void reshape(size_t n, T const & t = T())
 		{
@@ -209,6 +234,18 @@ namespace xstd {
 			this->resize(v.current(), t);
 		}
 
+		void reshape(std::initializer_list<size_t> v, T const & t = T())
+		{
+			this->resize(*(v.begin()), t);
+		}
+
+		private:
+		void reshape(std::initializer_list<size_t>::const_iterator & vit, T const & t = T())
+		{
+			this->resize(*vit, t);
+		}
+
+		public:
 		friend class mvector<2, T>;
 	};
 
