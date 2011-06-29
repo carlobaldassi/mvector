@@ -1,14 +1,18 @@
 #include <iostream>
 #include <cstdlib>
-
-//// we need to define operator<< for sets before inclusion of mvector.hpp
 #include <set>
+
+#include "mvector.hpp"
+
+using namespace std;
+using namespace xstd;
+
 std::ostream & operator<<(std::ostream & os, std::set<int> const & ss)
 {
 	os << "{";
-	for (std::set<int>::const_iterator i = ss.begin(); i != ss.end(); ++i) {
+	for (auto i = ss.begin(); i != ss.end(); ++i) {
 		os << *i;
-		std::set<int>::const_iterator j(i);
+		auto j(i);
 		++j;
 		if (j != ss.end()) {
 			os << ",";
@@ -18,13 +22,9 @@ std::ostream & operator<<(std::ostream & os, std::set<int> const & ss)
 	return os;
 }
 
-#include "mvector.hpp"
-
-using namespace std;
-using namespace xstd;
-
 int main(int argc, char ** argv)
 {
+	//// let's create a small set filled with some random entries
 	set<int> a;
 	a.insert(3);
 	a.insert(6);
