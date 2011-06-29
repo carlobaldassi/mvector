@@ -117,22 +117,22 @@ namespace xstd {
 	};
 
 	template<size_t d, typename T>
-	class mvector : public std::vector<mvector<d - 1, T> >
+	class mvector : public std::vector<mvector<d - 1, T>>
 	{
 		public:
 		mvector<d, T>(size_t n = 0, T const & t = T()) :
-			std::vector<mvector<d - 1, T> >(n, mvector<d - 1, T>(n, t))
+			std::vector<mvector<d - 1, T>>(n, mvector<d - 1, T>(n, t))
 		{}
 		mvector<d, T>(size_t v[], T const & t = T()) :
-			std::vector<mvector<d - 1, T> >(v[0], mvector<d - 1, T>(v + 1, t))
+			std::vector<mvector<d - 1, T>>(v[0], mvector<d - 1, T>(v + 1, t))
 		{}
 		mvector<d, T>(mshape<d> v, T const & t = T()) :
-			std::vector<mvector<d - 1, T> >(v.current(), mvector<d - 1, T>(v.next(), t))
+			std::vector<mvector<d - 1, T>>(v.current(), mvector<d - 1, T>(v.next(), t))
 		{}
 		mvector<d, T>(std::initializer_list<size_t> ilst, T const & t = T()) :
 			//mvector<d, T>(ilst.begin())
-			//std::vector<mvector<d - 1, T> >(*(ilst.begin()), mvector<d - 1, T>(ilst.begin()++, T()))
-			std::vector<mvector<d - 1, T> >(*(ilst.begin()))
+			//std::vector<mvector<d - 1, T>>(*(ilst.begin()), mvector<d - 1, T>(ilst.begin()++, T()))
+			std::vector<mvector<d - 1, T>>(*(ilst.begin()))
 		{
 			auto ilst_next = ilst.begin();
 			++ilst_next;
@@ -143,7 +143,7 @@ namespace xstd {
 
 		private:
 		mvector<d, T>(std::initializer_list<size_t>::const_iterator & ilst_it, T const & t = T()) :
-			std::vector<mvector<d - 1, T> >(*ilst_it)
+			std::vector<mvector<d - 1, T>>(*ilst_it)
 		{
 			auto ilst_next = ilst_it;
 			++ilst_next;

@@ -33,7 +33,7 @@ int main(int argc, char ** argv)
 	cout << a << endl << endl;
 
 	//// 3x4 matrix of sets
-	mvector<2, set<int> > b(mshape<2>(3, 4), a);
+	mvector<2, set<int>> b(mshape<2>(3, 4), a);
 
 	cout << "a 3x4 matrix of sets:" << endl;
 	cout << b << endl;
