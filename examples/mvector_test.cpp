@@ -26,6 +26,13 @@ void main()
     ASSERT(v5.size() == 3 && v5[0] == 1 && v5[1] == 2 && v5[2] == 3, "Failed vector<T> assign with mvector<1,T> iterator constructor");
     ASSERT(v6.size() == 3 && v6[0] == 1 && v6[1] == 2 && v6[2] == 3, "Failed vector<T> assign with indexed mvector<2,T> iterator constructor");
 
+    std::vector<double> v7 = xstd::mvector<1, double>(v11);
+    std::vector<double> v8 = xstd::mvector<1, double>(mv1);
+    xstd::mvector<1, double> mv4 = std::vector<double>(mv1);    
+    ASSERT(v7.size() == 3 && v7[0] == 1 && v7[1] == 2 && v7[2] == 3, "Failed vector<T> assign with mvector<1,T> constructor from other vector<T>");
+    ASSERT(v8.size() == 3 && v8[0] == 1 && v8[1] == 2 && v8[2] == 3, "Failed vector<T> assign with mvector<1,T> constructor from other mvector<1,T>");
+    ASSERT(mv4.size() == 3 && mv4[0] == 1 && mv4[1] == 2 && mv4[2] == 3, "Failed mvector<1,T> assign with vector<T> constructor from other mvector<1,T>");
+
     std::cout << "All tests passed!" << std::endl;
     std::getchar(); // wait key to allow message visualisation
 }
