@@ -24,8 +24,6 @@
 #include <ostream>
 #include <cstdarg>
 
-//#define XSTD_DEBUG
-
 #ifdef XSTD_DEBUG
 #include <iostream>
 #define XSTD_DBGOUT(x) (std::cerr << x << std::endl)
@@ -151,6 +149,8 @@ namespace xstd {
             }
         }
 
+        mvector<d, T>& operator=(xstd::mvector<d-1, T> mv) { std::swap(*this, mv); return *this; }
+
         public:
         void reshape(size_t n, T const & t = T())
         {
@@ -213,10 +213,9 @@ namespace xstd {
         mvector<1, T>(size_t v[], T const & t = T()) : std::vector<T>(v[0], t) {}
         mvector<1, T>(mshape<1> const & v, T const & t = T()) : std::vector<T>(v.current(), t) {}
         mvector<1, T>(std::vector<T>& other) : std::vector<T>(other) {}
-        mvector<1, T>(const std::vector<T>& other) : std::vector<T>(other) {}
-        mvector<1, T>(std::initializer_list<size_t> ilst, T const & t = T()) : /*mvector<d, T>(ilst.begin(), t)*/ std::vector<T>(*(ilst.begin()), t) {}        
-        const mvector<1, T>& operator=(const std::vector<T>& v) { return mvector<1, T>(v); }
-        const std::vector<T>& operator=(const mvector<1, T>& mv) { return std::vector<T>(mv); }
+        mvector<1, T>(const std::vector<T>& other) : std::vector<T>(other) {}        
+        mvector<1, T>(std::initializer_list<size_t> ilst, T const & t = T()) : /*mvector<d, T>(ilst.begin(), t)*/ std::vector<T>(*(ilst.begin()), t) {}
+        mvector<1, T>& operator=(std::vector<T> v) { std::swap(*this, v); return *this; }
         private:
         mvector<1, T>(std::initializer_list<size_t> & ilst, std::initializer_list<size_t>::const_iterator ilst_it, T const & t = T()) : std::vector<T>(*ilst_it, t) {}
         public:
