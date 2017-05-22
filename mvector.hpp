@@ -1,18 +1,18 @@
 /* mvector.hpp
- * 
+ *
  * Copyright (C) 2011 Carlo Baldassi (the "Author") <carlobaldassi@gmail.com>.
  * All Rights Reserved.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the Licence, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see <http://www.gnu.org.licences/>.
  */
@@ -49,7 +49,7 @@ namespace xstd {
             va_end(ap);
             *refs = 1;
         }
-        
+
         ~mshape<d>()
         {
             XSTD_DBGOUT("destructor data=" << data << " refs=" << refs);
@@ -213,7 +213,7 @@ namespace xstd {
         mvector<1, T>(size_t v[], T const & t = T()) : std::vector<T>(v[0], t) {}
         mvector<1, T>(mshape<1> const & v, T const & t = T()) : std::vector<T>(v.current(), t) {}
         mvector<1, T>(std::vector<T>& other) : std::vector<T>(other) {}
-        mvector<1, T>(const std::vector<T>& other) : std::vector<T>(other) {}        
+        mvector<1, T>(const std::vector<T>& other) : std::vector<T>(other) {}
         mvector<1, T>(std::initializer_list<size_t> ilst, T const & t = T()) : /*mvector<d, T>(ilst.begin(), t)*/ std::vector<T>(*(ilst.begin()), t) {}
         mvector<1, T>& operator=(std::vector<T> v) { std::swap(*this, v); return *this; }
         private:
